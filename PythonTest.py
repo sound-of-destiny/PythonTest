@@ -99,11 +99,6 @@ print(tinydict)             # 输出完整的字典
 print(tinydict.keys())      # 输出所有键
 print(tinydict.values())    # 输出所有值
 
-'''
-这是多行注释，用三个单引号
-这是多行注释，用三个单引号 
-这是多行注释，用三个单引号
-'''
 ran = random.random()
 print(ran)
 
