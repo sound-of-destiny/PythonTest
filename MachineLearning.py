@@ -13,7 +13,8 @@ b = tf.Variable(tf.zeros([10]))
 # 使用softmax模型
 y = tf.nn.softmax(tf.matmul(x, W) + b)
 
-# 代价函数占位符
+# 代价函数
+# 占位符
 y_ = tf.placeholder(tf.float32, [None, 10])
 
 # 交叉熵评估代价
