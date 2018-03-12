@@ -142,8 +142,9 @@ def print_info(arg1, *vartuple):
 print_info(10)
 print_info(70, 60, 50)
 
-# 可写函数说明
+# 可写函数说明 lambda
 two_sum = lambda arg1, arg2: arg1 + arg2
+max = lambda arg1, arg2: arg1 if(arg1>arg2) else arg2
 
 # 调用sum函数
 print("相加后的值为 : ", two_sum(10, 20))
