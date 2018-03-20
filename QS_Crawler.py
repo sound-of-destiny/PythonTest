@@ -3,7 +3,7 @@ import re
 
 import requests
 
-import MySQLdb
+import pymysql
 
 
 def check_link(url):
@@ -15,7 +15,7 @@ def check_link(url):
     except:
         print('无法连接服务器')
 
-conn= MySQLdb.connect(
+conn= pymysql.connect(
         host='202.194.15.184',
         port = 3306,
         user='gradms',
@@ -31,13 +31,28 @@ html = check_link(url)
 text = json.loads(html)
 for rank in text["data"]:
     i=i+1
-    print(rank["title"])
-    sql1="select nationId from gradms.base_nation where nationEnglishName='"+rank["country"].upper()+"'"
-    nationId=cur.execute(sql1)
-    sql2="insert into gradms.newabroad_university_info (nationId,universityName,orderNum,year) values (%d,%s,%d,%s)"
-    cur.execute(sql2,(nationId,rank["title"],i,'2018'))
+    countryName = rank["country"].upper()
+    print(countryName)
+    if countryName == 'HONG KONG':
+        countryName = 'HONG KONG, CHINA'
+    if countryName == 'TAIWAN':
+        countryName = 'TAIWAN, CHINA'
+    if countryName == 'MACAO S.A.R., CHINA':
+        countryName = 'MACAU'
+    if countryName == 'SOUTH KOREA':
+        countryName = 'REPUBLIC OF KOREA'
+    if countryName == 'CZECH REPUBLIC':
+        countryName = 'CZECH'
+    if countryName == 'IRAN, ISLAMIC REPUBLIC OF':
+        countryName = 'IRAN'
+    if countryName == 'PALESTINIAN TERRITORY, OCCUPIED':
+        countryName = 'PALESTINE'
 
+    cur.execute("select nationId from gradms.base_nation where nationEnglishName='"+countryName+"'")
+    nationId=cur.fetchone()
+    if nationId :
+        sql="insert into gradms.newabroad_university_info (nationId,universityName,orderNum,year) values (%d,'%s',%d,'%s')" % (nationId[0],rank["title"].replace("'","''").encode("utf-8").decode("latin1"),i,'2018')
+        cur.execute(sql)
 
-cur.close()
 conn.commit()
 conn.close()
