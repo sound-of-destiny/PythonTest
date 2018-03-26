@@ -16,10 +16,16 @@ def check_link(url):
         print('无法连接服务器')
 
 conn= pymysql.connect(
-        host='202.194.15.184',
+        #host='202.194.15.184',
+        #port = 3306,
+        #user='gradms',
+        #passwd='gradms184.db',
+        #db ='gradms'
+
+        host='202.194.14.145',
         port = 3306,
-        user='gradms',
-        passwd='gradms184.db',
+        user='root',
+        passwd='qlscadmin',
         db ='gradms'
     )
 
