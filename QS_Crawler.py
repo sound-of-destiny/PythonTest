@@ -16,23 +16,25 @@ def check_link(url):
         print('无法连接服务器')
 
 conn= pymysql.connect(
-        #host='202.194.15.184',
-        #port = 3306,
-        #user='gradms',
-        #passwd='gradms184.db',
-        #db ='gradms'
-
-        host='202.194.14.145',
+        host='202.194.15.184',
         port = 3306,
-        user='root',
-        passwd='qlscadmin',
-        db ='gradms'
+        user='gradms',
+        passwd='gradms184.db',
+        db ='gradms',
+
+        #host='202.194.14.145',
+        #port = 3306,
+        #user='root',
+        #passwd='qlscadmin',
+        #db ='gradms',
+        charset='UTF8'
     )
 
 cur = conn.cursor() 
 
 i=0
 url = 'https://www.topuniversities.com/sites/default/files/qs-rankings-data/357051.txt?_=1521446318425'
+#url = 'https://www.timeshighereducation.com/sites/default/files/the_data_rankings/world_university_rankings_2018_limit0_369a9045a203e176392b9fb8f8c1cb2a.json'
 html = check_link(url)
 text = json.loads(html)
 for rank in text["data"]:
@@ -57,7 +59,7 @@ for rank in text["data"]:
     cur.execute("select nationId from gradms.base_nation where nationEnglishName='"+countryName+"'")
     nationId=cur.fetchone()
     if nationId :
-        sql="insert into gradms.newabroad_university_info (nationId,universityName,orderNum,year) values (%d,'%s',%d,'%s')" % (nationId[0],rank["title"].replace("'","''").encode("utf-8").decode("latin1"),i,'2018')
+        sql="insert into gradms.newabroad_university_info (nationId,universityName,orderNum,year) values (%d,'%s',%d,'%s')" % (nationId[0],rank["title"].replace("'","''"),i,'2018')
         cur.execute(sql)
 
 conn.commit()
