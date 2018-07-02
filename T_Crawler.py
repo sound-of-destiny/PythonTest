@@ -34,17 +34,17 @@ def levenshtein(str1,str2):
     return similarity
 
 conn = pymysql.connect(
-        host='202.194.15.184',
-        port = 3306,
-        user='gradms',
-        passwd='gradms184.db',
-        db ='gradms',
-
-        #host='202.194.14.145',
+        #host='202.194.15.184',
         #port = 3306,
-        #user='root',
-        #passwd='qlscadmin',
+        #user='gradms',
+        #passwd='gradms184.db',
         #db ='gradms',
+
+        host='202.194.14.145',
+        port = 3306,
+        user='root',
+        passwd='qlscadmin',
+        db ='gradms',
         charset='UTF8'
     )
 
